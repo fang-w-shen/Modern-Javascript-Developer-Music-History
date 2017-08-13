@@ -50,7 +50,7 @@
       strings: {
         prefixAgo: null,
         prefixFromNow: null,
-        suffixAgo: "ago",
+        suffixAgo: "ago...",
         suffixFromNow: "from now",
         inPast: 'any moment now',
         seconds: "less than a minute",
@@ -58,7 +58,7 @@
         minutes: "%d minutes",
         hour: "about an hour",
         hours: "about %d hours",
-        day: "a day",
+        day: `A day`,
         days: "%d days",
         month: "about a month",
         months: "%d months",

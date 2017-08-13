@@ -1,19 +1,50 @@
 "use strict";
+/////////////////////GETTING DATA FROM FIREBASE////////////////////////
+var songcounter = 1;
+(function refreshfromfirebase() {
+	let ajaxrequest = require('./firebaserequest');
+	ajaxrequest().then((response)=>{
+		console.log("the most updated songdata from firebase is", response);
+		if (response!== null ) {
+			let arr = Object.keys(response).forEach( function(key){
+			let newArrItem = response[key];
+			newArrItem.key = key;
+		  	printdatatoHTML(newArrItem);
+			});
+		}
+	});
+})();
 
-let songcounter = 1;
-
+/////////////////////GET VIEWPORT & ADD EVENT LISTENERS////////////////////////
 let viewport = require('./spa-viewports.js')();
-document.getElementById("addbutton").addEventListener("click", addtomasterplaylist_firebase);
+document.getElementById("song-name").onkeydown = checkenterkey;
+document.getElementById("artist").onkeydown = checkenterkey;
+document.getElementById("album-name").onkeydown = checkenterkey;
+document.getElementById("addbutton").addEventListener("click", takeuserinput);
 
+function checkenterkey(e) {
+	if (e.keyCode == 13) {
+		takeuserinput();	
+	}
+}
 
-function addtomasterplaylist_firebase() {
-	var name = document.getElementById("song-name").value;
-	var artist = document.getElementById("artist").value;
-	var album = document.getElementById("album-name").value;
-	var newSong = {
+/////////////////////RECORDING USER DATA////////////////////////
+function takeuserinput() {
+	let name = document.getElementById("song-name").value;
+	let artist = document.getElementById("artist").value;
+	let album = document.getElementById("album-name").value;
+	let dateObj = new Date();
+	let month = dateObj.getUTCMonth() + 1; //months from 1-12
+	let day = dateObj.getUTCDate();
+	let year = dateObj.getUTCFullYear();
+	let hour = dateObj.getHours();
+	let minute = dateObj.getMinutes();
+	let currentdate = month + "/" + day + "/" + year +" "+hour+":"+minute;
+	let newSong = {
       artist: artist,
       album: album,
-      name: name
+      name: name,
+      time:currentdate
     };
     
 	if (name ==="") {
@@ -30,142 +61,63 @@ function addtomasterplaylist_firebase() {
 	}
 	else {
 		// songcounter.push(name+" > by "+artist+" on the album " +album);
-		printdatafromuser(newSong);
+		senddatatofirebase(newSong);
 	}
 }
 
-/////////////////////GETTING DATA FROM FIREBASE////////////////////////
-(function refreshfromfirebase() {
-	let ajaxrequest = require('./firebaserequest');
-	ajaxrequest().then((response)=>{
-		console.log("the most updated songdata from firebase is", response);
-		if (response!== null ) {
-			var arr = Object.keys(response).reverse().forEach( function(key){
-			var newArrItem = response[ key ];
-			newArrItem.key = key;
-		  	printdatafromfirebase(newArrItem);
-			});
-		}
-	});
-})();
-
-
-
-
-
-
-
-function printdatafromfirebase(newSong) {
-		let newsongdiv = document.createElement("div");
-		$(newsongdiv).attr("class","col-12 single-song");
-		$(newsongdiv).attr("id",`${songcounter}`);	
-		$(newsongdiv).html(`<h2>${newSong.name}</h2>
-	         <label>${newSong.artist}</label> | <label>${newSong.album}</label> | <label>Genre</label>
-	         <time class='date timeago' dateTime='${'8/12/2017 7:25 PM'}'></time>`);
-		$("#row").append(newsongdiv);
-		$('.timeago').timeago();
-		
-	    let deletebutton = document.createElement("button");
-	    $(deletebutton).html("Delete");
-	    $(deletebutton).on("click",killall);
-	    $(deletebutton).attr("id",`b${songcounter}`);
-	    $(`#${songcounter}`).append(deletebutton);
-
-
-
-		$(`#b${songcounter}`).on("click", ()=>{
-			
-				
-			    	$.ajax({
-				      url: `https://musichistory-43b58.firebaseio.com/${newSong.key}/.json`,
-				      method: "DELETE"
-				    })
-				    .done(function(response) {
-				      // console.log("response after deletion", response);
-				      // You'll likely want to execute the code that you're using
-				      // on page load here to run the GET XHR and bind to Handlebars
-				    });
-				});	
-		songcounter+=1;
-	
-}
-
-
-
-function printdatafromuser(newSong) {
-	console.log("newSong is", newSong);
-		
-	var key;
+/////////////////////SENDING USER DATA TO FIREBASE////////////////////////
+function senddatatofirebase(newSong) {
 	$.ajax({
       url: "https://musichistory-43b58.firebaseio.com/.json",
       method: "POST",
       data: JSON.stringify(newSong)
     })
     .done(function(response) {
-      // console.log("Added Your Song", response);
-      key = response.name;
-      // console.log("", key);
+    	newSong.key = response.name;  		
 		document.getElementById("song-name").value="";
 		document.getElementById("artist").value="";
 		document.getElementById("album-name").value="";
 		document.getElementById("song-name").focus();
-		let newsongdiv = document.createElement("div");
-		$(newsongdiv).attr("class","col-12 single-song");
-		$(newsongdiv).attr("id",`${songcounter}`);	
-		$(newsongdiv).html(`<h2>${newSong.name}</h2>
-	         <label>${newSong.artist}</label> | <label>${newSong.album}</label> | <label>Genre</label>
-	         <time class='date timeago' dateTime=${'8/12/2017 7:25 PM'}></time>`);
-		$("#row").prepend(newsongdiv);
-		$('.timeago').timeago();
+		printdatatoHTML(newSong);
+	});
+
+}
+
+/////////////////////PRINTING USER DATA TO HTML////////////////////////
+let Handlebars = require('hbsfy/runtime');
+Handlebars.registerPartial("timestamp", require('../template/partials/timestamp.hbs'));
+let songtemplate = require('../template/songgrid.hbs');
+
+function printdatatoHTML(newSong) {
+		newSong.counter=songcounter;
+
+		$("#row").prepend(songtemplate(newSong));	
 		
-	    let deletebutton = document.createElement("button");
-	    $(deletebutton).html("Delete");
-	    $(deletebutton).on("click",killall);
-	    $(deletebutton).attr("id",`b${songcounter}`);
-	    $(`#${songcounter}`).append(deletebutton);
-
-
-
-		$(`#b${songcounter}`).on("click", ()=>{
-			
-				
+		$(`#b${songcounter}`).on("click", (event)=>{
+					
+					
 			    	$.ajax({
-				      url: `https://musichistory-43b58.firebaseio.com/${key}/.json`,
+				      url: `https://musichistory-43b58.firebaseio.com/${newSong.key}/.json`,
 				      method: "DELETE"
 				    })
 				    .done(function(response) {
+				    	deleteself(event);
 				      // console.log("response after deletion", response);
 				      // You'll likely want to execute the code that you're using
 				      // on page load here to run the GET XHR and bind to Handlebars
 				    });
 				});	
-
-      // You'll likely want to execute the code that you're using
-      // on page load here to run the GET XHR and bind to Handlebars
-    	
-	
-
-	
-	});
-	
-songcounter+=1;
-}
-document.getElementById("song-name").onkeydown = enter;
-document.getElementById("artist").onkeydown = enter;
-document.getElementById("album-name").onkeydown = enter;
-
-function enter(e) {
-	if (e.keyCode == 13) {
-		addtomasterplaylist_firebase();	
-	}
+		songcounter+=1;
+		$('.timeago').timeago();
+		$('#search').quicksearch('.default_list_data');
 }
 
-function killall(a) {
-	var parent = a.target.parentNode;	
+
+function deleteself(event) {
+	let parent = event.target.parentNode;	
 	parent.parentNode.removeChild(parent);
 }	
 
-$('.timeago').timeago();
 //===========MUSIC HISTORY 4 BELOW=============//
 
 // var songs = [];
@@ -232,7 +184,7 @@ $('.timeago').timeago();
 // 		let songItem = songs[item];
 // 		songData += "<div>";
 // 		songData += "<h2>" + songItem.name + ": " + songItem.artist +": "+songItem.album+"</h2>";
-// 		songData += "<input type='button' value='delete' onclick='killall(this.parentNode);'>" + "</div>";
+// 		songData += "<input type='button' value='delete' onclick='deleteself(this.parentNode);'>" + "</div>";
 // 	}
 // 	songDiv.innerHTML += songData;
 // }
@@ -272,7 +224,7 @@ $('.timeago').timeago();
 // 		let songItem = songs[item];
 // 		songData1 += "<div>";
 // 		songData1 += "<h2>" + songItem.name + ": " + songItem.artist +": "+songItem.album+"</h2>";
-// 		songData1 += "<input type='button' value='delete' onclick='killall(this.parentNode);'>" + "</div>";
+// 		songData1 += "<input type='button' value='delete' onclick='deleteself(this.parentNode);'>" + "</div>";
 // 	}
 // 	songDiv.innerHTML += songData1;
 // }
