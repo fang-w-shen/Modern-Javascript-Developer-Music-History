@@ -16,7 +16,7 @@ var songcounter = 1;
 })();
 
 /////////////////////GET VIEWPORT & ADD EVENT LISTENERS////////////////////////
-let viewport = require('./spa-viewports.js')();
+let settingUpSinglePageViewPort = require('./spa-viewports.js')();
 document.getElementById("song-name").onkeydown = checkenterkey;
 document.getElementById("artist").onkeydown = checkenterkey;
 document.getElementById("album-name").onkeydown = checkenterkey;
