@@ -1,0 +1,159 @@
+/*navbar*/
+.nav-bar {
+    margin: 1em auto 1em;
+    /*--background-color:  #FFB4B0 ;*/
+    border: 1px solid black;
+    background-image:url('../images/navbarbackground.png');
+    background-size:cover;
+    width:100%;
+    height:8%;
+}
+.nv {
+    padding-left:2em;
+    padding-bottom:1em;
+}
+
+.nv a {
+    color:white;
+    font-weight: bolder;
+    font-size:2em;
+    padding-top:1em;
+    text-decoration: none;
+}
+/*Main Content Container
+=============================================*/
+#row {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+    flex-flow: column wrap;
+    height: 95%;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+#viewb {
+    color:#2dfc1e;
+    background-color: rgb(248,239,222);
+    border-radius:13%;
+}
+#addb {
+    border-radius: 13%;
+}
+#add {
+    width:13%;
+    margin:auto;
+    margin-top:10%;
+    padding-left: 0;
+}
+.col2 label,.cold2 input{
+    text-align:left;
+    font-size:1.3em;
+}
+legend {
+    text-align:center;
+    font-size:1.5em;
+}
+fieldset {
+    color:#2dfc1e;
+    font-weight:bolder;
+    font-size:1.3em;
+}
+#addbutton {
+    background-color: black;
+    color:white;
+}
+
+.main-content {
+    height:100%;
+    display:flex;
+    align-items: stretch;
+    flex-direction: row;
+    width:100%;
+    justify-content: space-between;
+}
+.col2 {
+    background-image:url("../images/songinfo.jpg");
+    background-size:cover;
+    border: 1px solid RGB(0, 0, 0);
+    color:white;
+    padding: auto;
+    flex-basis:75%;
+}
+
+
+.single-song {
+    margin-right: 5%;
+    font-weight: bolder;
+    font-size: .5em;
+    color:#2dfc1e;
+    width:45%;
+}
+.single-song label {
+    font-size:.9em;
+}
+/*Song Filter Section
+=============================================*/
+
+.col1 {
+    background-image:url("../images/col1.jpg");
+    background-size:cover;
+    border: 1px solid black;
+    color:white;
+    flex-basis:23%;
+    font-size:1.5em;
+    font-weight: bolder;
+    color:#2dfc1e;
+}
+
+input.form-control.slider-input {
+    padding: 0;
+}
+.flex1 {
+    display:flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+.flex2 {
+    display:flex;
+    flex-direction: column;
+}
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    margin-top:2em;
+}
+.form-group1{
+    text-align: left;
+    font-weight: bolder;
+    align-items: stretch;
+    margin-bottom: 1em;
+}
+.form-group {
+    text-align: center;
+    font-size:1em;
+    font-weight: bolder;
+    margin-top:1em;
+    align-items: stretch;
+    height:90%;
+}
+.form-check-label {
+    text-align: right;
+}
+
+.button {
+    color:white;
+}
+
+body {
+    height:80vh;
+    background-color: rgb(239,205,118);
+}
+input[type="button"] {
+    color:red;
+    align-items:flex-end;
+}
+.hidden {
+    display:none;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bootstrap": "^3.3.35",
+    "@types/grunt": "^0.4.21",
+    "@types/handlebars": "^4.0.35",
+    "@types/jquery": "^3.2.11",
+    "@types/lodash": "^4.14.72",
+    "bootstrap": "^3.3.7",
+    "browserify": "^14.0.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "handlebars": "^4.0.10",
+    "jquery": "^3.1.1",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "lodash": "^4.17.4",
+    "matchdep": "^1.0.1"
+  },
+  "dependencies": {
+    "handlebars": "^4.0.6",
+    "hbsfy": "^2.7.0"
+  }
+}
