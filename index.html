@@ -27,11 +27,11 @@
             </li>
            
           </ul>
-          <form class="form-inline">
-            <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
+       
+            <button id="searchbutton" class="btn btn-outline-info my-2 my-sm-0">Search</button>
             <input class="form-control mr-sm-2" id="search" type="text" data-toggle="hideseek" data-list=".default_list_data" placeholder="By:Song/Artist/Album">
             
-          </form>
+         
         </div>
     </nav>
 
@@ -63,6 +63,7 @@
     </nav>
 
 	    <!-- End Of Navigation Bar -->
+
 
 	    <!-- Main Content -->
 	    <div id="add" class="hidden"> 
@@ -160,13 +161,11 @@
 	                            
 									<label>Music Volume</label>
 									<br>
-									<input class="inputRange" id="num2" type="range" min="0" max="100" value="0" onchange="document.getElementById('num1').value=this.value;">
+									<input class="inputRange" id="num2" type="range" min="0" max="100" value="0" oninput="document.getElementById('num1').value=this.value;">
 									<input class="inputNumber" id="num1" min="0" max="100" type="number" value="0" oninput="document.getElementById('num2').value=this.value">
 	                        </div>
 	                    </form>
 	                </div>
-
-
 
 <!--                  Col2                 -->
 
@@ -175,11 +174,8 @@
 	                    </div>
 	                </div>
 	    </div>
-	    <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  		<script type="text/javascript" src="javascripts/jquery.quicksearch.js"></script>	
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  		<script type="text/javascript" src="javascripts/jquery.quicksearch.js"></script>
 	    <script src="javascripts/jquery.timeago.js" type="text/javascript"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>

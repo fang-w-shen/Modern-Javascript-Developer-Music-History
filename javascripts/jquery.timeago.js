@@ -14,7 +14,6 @@
  * Copyright (c) 2008-2017, Ryan McGeary (ryan -[at]- mcgeary [*dot*] org)
  */
 "use strict";
-
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -50,7 +49,7 @@
       strings: {
         prefixAgo: null,
         prefixFromNow: null,
-        suffixAgo: "ago...",
+        suffixAgo: "ago",
         suffixFromNow: "from now",
         inPast: 'any moment now',
         seconds: "less than a minute",
@@ -58,7 +57,7 @@
         minutes: "%d minutes",
         hour: "about an hour",
         hours: "about %d hours",
-        day: `A day`,
+        day: "a day",
         days: "%d days",
         month: "about a month",
         months: "%d months",

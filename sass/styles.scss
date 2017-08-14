@@ -65,6 +65,7 @@ fieldset {
     display:inline-block;
     padding-left:5%;
     padding-bottom:2%;
+    padding-right:5%;
 }
 #addbutton {
     background-color: black;
@@ -180,4 +181,10 @@ body {
         font-size:1.4em;
     }
 
+}
+
+/*ADJUSTS MODAL SHIFT*/
+.modal-open{
+    padding-right: 0 !important;
+    overflow-y: scroll;
 }
